@@ -1,28 +1,28 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using SimpleJSON	;
 
-public class RepeatedGet_example : MonoBehaviour {
-
+public class Getinformation : MonoBehaviour {
+	
 	//
 	public string IP = "127.0.0.1";
 	public int Port = 25001;
-//	private Rigidbody rb;
+	//	private Rigidbody rb;
 	public string url = "128.237.199.121:8081/unity/status";
-//	public Rigidbody projectile;
-//	public Text content;
+	//	public Rigidbody projectile;
+	//	public Text content;
 	public int i;
-    string dplabel = "start";
-    string oxygen_level = "null";
+	public string dplabel = "start";
+	public string oxygen_level = "null";
 	string drugname = "null";
 	string dosedge = "null";
-
+	
 	void Start(){
 		StartCoroutine(RepeatedGet());
-
+		
 	}
-/*
+	/*
     void OnGUI()
     {
         string c = "a";
@@ -64,9 +64,10 @@ public class RepeatedGet_example : MonoBehaviour {
         }
     }
 	*/
-    IEnumerator RepeatedGet()
+	IEnumerator RepeatedGet()
 	{
 		while (true) {
+
 			Debug.Log ("repeated action:");
 			print(url);
 			WWW w = new WWW (url);
@@ -74,27 +75,30 @@ public class RepeatedGet_example : MonoBehaviour {
 			print(Time.time);
 			yield return new WaitForSeconds(1);
 			print (Time.time);
-            if (w.error == null)
-            {
-                Debug.Log("WWW Ok!: " + w.text);
-                var HubResponse = JSON.Parse(w.text);
-                Debug.Log("hear rate:" + HubResponse["metricMap"]["heart_rate"].Value);
-                dplabel = HubResponse["metricMap"]["heart_rate"].Value;
-                oxygen_level = HubResponse["metricMap"]["oxygen_saturation"].Value;
+			if (w.error == null)
+			{
+				Debug.Log("WWW Ok!: " + w.text);
+				var HubResponse = JSON.Parse(w.text);
+				Debug.Log("hear rate:" + HubResponse["metricMap"]["heart_rate"].Value);
+				dplabel = HubResponse["metricMap"]["heart_rate"].Value;
+				oxygen_level = HubResponse["metricMap"]["oxygen_saturation"].Value;
 
-            }
-            else
-            {
-                Debug.Log("error");
-                //			content.text = w.text;
-            }
+				
+			}
+			else
+			{
+				Debug.Log("error");
+				//			content.text = w.text;
+			}
 		}
 	}
-	void Send(){
-		/*Druginput js = (Druginput)GetComponent ("Druginput");
+	public void Send(){
+		/*
+		Druginput js = (Druginput)GetComponent ("Druginput");
 		string drug = js.drugname;
 		string dosedge = js.dos;
+		Debug.Log(drug);
 		*/
 	}
-
+	
 }
